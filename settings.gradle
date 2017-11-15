@@ -1,1 +1,1 @@
-include ':Demo', ':LibDialog', ':LibWebView'
+include ':Demo', ':LibDialog', ':LibWebView', ':LibUtils'
