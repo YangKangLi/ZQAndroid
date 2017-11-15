@@ -14,7 +14,7 @@ public class MathDataUtil {
      * @param d
      * @return
      */
-    public static BigDecimal stripTrailingZeros(double d) {//去除double尾巴的0
+    public static BigDecimal stripTrailingZeros(double d) {
         return new BigDecimal(d).stripTrailingZeros();
     }
 }

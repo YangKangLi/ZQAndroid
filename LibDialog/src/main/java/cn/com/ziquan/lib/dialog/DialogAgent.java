@@ -50,7 +50,7 @@ public class DialogAgent {
      * @param contentText
      * @return
      */
-    public DialogAgent setContent(String contentText) {
+    public DialogAgent setContent(CharSequence contentText) {
         mLibDialog.setContent(contentText);
         return this;
     }
@@ -61,7 +61,7 @@ public class DialogAgent {
      * @param text
      * @return
      */
-    public DialogAgent setPositiveBtn(String text) {
+    public DialogAgent setPositiveBtn(CharSequence text) {
         return this.setPositiveBtn(text, null);
     }
 
@@ -82,7 +82,7 @@ public class DialogAgent {
      * @param listener
      * @return
      */
-    public DialogAgent setPositiveBtn(String text, LibDialog.OnClickListener listener) {
+    public DialogAgent setPositiveBtn(CharSequence text, LibDialog.OnClickListener listener) {
         mLibDialog.setPositiveBtn(text, listener);
         return this;
     }
@@ -93,7 +93,7 @@ public class DialogAgent {
      * @param text
      * @return
      */
-    public DialogAgent setNegativeBtn(String text) {
+    public DialogAgent setNegativeBtn(CharSequence text) {
         return this.setNegativeBtn(text, null);
     }
 
@@ -114,7 +114,7 @@ public class DialogAgent {
      * @param listener
      * @return
      */
-    public DialogAgent setNegativeBtn(String text, LibDialog.OnClickListener listener) {
+    public DialogAgent setNegativeBtn(CharSequence text, LibDialog.OnClickListener listener) {
         mLibDialog.setNegativeBtn(text, listener);
         return this;
     }

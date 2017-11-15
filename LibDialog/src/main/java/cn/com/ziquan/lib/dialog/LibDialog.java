@@ -43,16 +43,16 @@ public class LibDialog extends Dialog {
     private int mDialogType = -1;
 
     // 对话框显示的内容
-    private String mContentText;
+    private CharSequence mContentText;
 
     // 确认按钮文本
-    private String mPositiveBtnText;
+    private CharSequence mPositiveBtnText;
 
     // 确认按钮点击事件监听器
     private OnClickListener mPositiveBtnClickListener;
 
     // 取消按钮文本
-    private String mNegativeBtnText;
+    private CharSequence mNegativeBtnText;
 
     // 取消按钮点击事件监听器
     private OnClickListener mNegativeBtnClickListener;
@@ -159,7 +159,7 @@ public class LibDialog extends Dialog {
      * @param contentText
      * @return
      */
-    protected LibDialog setContent(String contentText) {
+    protected LibDialog setContent(CharSequence contentText) {
         this.mContentText = contentText;
         return this;
     }
@@ -169,7 +169,7 @@ public class LibDialog extends Dialog {
      *
      * @param contentText
      */
-    protected void updateContext(String contentText) {
+    protected void updateContext(CharSequence contentText) {
         mContentText = contentText;
         if (tvContentText != null) {
             tvContentText.setText(mContentText);
@@ -183,7 +183,7 @@ public class LibDialog extends Dialog {
      * @param listener
      * @return
      */
-    protected LibDialog setPositiveBtn(String text, OnClickListener listener) {
+    protected LibDialog setPositiveBtn(CharSequence text, OnClickListener listener) {
         this.mPositiveBtnText = text;
         this.mPositiveBtnClickListener = listener;
         return this;
@@ -196,7 +196,7 @@ public class LibDialog extends Dialog {
      * @param listener
      * @return
      */
-    protected LibDialog setNegativeBtn(String text, OnClickListener listener) {
+    protected LibDialog setNegativeBtn(CharSequence text, OnClickListener listener) {
         this.mNegativeBtnText = text;
         this.mNegativeBtnClickListener = listener;
         return this;

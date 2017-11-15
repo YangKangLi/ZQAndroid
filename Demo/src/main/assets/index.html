@@ -48,6 +48,7 @@
 
 
 
+
     </style>
     <script src="plugin/swiper4.0.5/swiper.min.js"></script>
     <script src="plugin/swiper4.0.5/swiper.animate1.0.2.min.js"></script>
@@ -58,12 +59,12 @@
     <div class="swiper-wrapper">
         <div class="swiper-slide" style="height:100%">
             <p class="ani" swiper-animate-effect="rollIn" swiper-animate-duration="0.5s"
-               swiper-animate-delay="0.3s">Animate.css</p>
+               swiper-animate-delay="0.3s" onclick="testAlert()">Animate.css</p>
         </div>
         <div class="swiper-slide" style="height:100%">Slide 2</div>
         <div class="swiper-slide" style="height:100%">
             <p class="ani" swiper-animate-effect="bounceInRight" swiper-animate-duration="0.9s"
-               swiper-animate-delay="0.5s" onclick="testAlert()">内容</p>
+               swiper-animate-delay="0.5s" onclick="testConfirm()">内容</p>
         </div>
     </div>
     <!-- 如果需要分页器 -->
@@ -119,9 +120,20 @@ var mySwiper = new Swiper ('.swiper-container', {
 
 function testAlert(){
     alert("测试Alert");
-
-    //confirm("测试Confirm");
 }
+
+function testConfirm(){
+    confirm("测试Confirm");
+}
+
+function calledByJava(num1, num2){
+    if(isNaN(num1)){
+        num1 = parseInt(num1);
+    }
+    alert(num1+num2);
+    //alert("我是被Java调用的"+str+num);
+}
+
 
 
 

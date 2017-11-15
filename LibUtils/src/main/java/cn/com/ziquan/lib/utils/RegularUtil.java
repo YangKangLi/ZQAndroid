@@ -63,7 +63,7 @@ public class RegularUtil {
      * 私有构造方法
      */
     private RegularUtil() {
-        // DO NOTHING
+        throw new UnsupportedOperationException("u can't instantiate here!");
     }
 
     /**
