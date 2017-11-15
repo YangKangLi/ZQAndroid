@@ -1,9 +1,9 @@
 package cn.com.ziquan.lib.utils;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,8 +11,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -50,6 +48,41 @@ public class OSUtil {
         return deviceUuid.toString().toUpperCase();
     }
 
+    /**
+     * 获取app版本名
+     *
+     * @param context
+     * @return
+     */
+    public static String getAppVersionName(Context context) {
+        PackageManager pm = context.getPackageManager();
+        PackageInfo pi;
+        try {
+            pi = pm.getPackageInfo(context.getPackageName(), 0);
+            return pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 获取app版本号
+     *
+     * @param context
+     * @return
+     */
+    public static int getAppVersionCode(Context context) {
+        PackageManager pm = context.getPackageManager();
+        PackageInfo pi;
+        try {
+            pi = pm.getPackageInfo(context.getPackageName(), 0);
+            return pi.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 
 
@@ -104,11 +137,11 @@ public class OSUtil {
     }
 
     /**
-     * 打开网络设置界面
+     * 打开Wifi设置界面
      *
      * @param activity
      */
-    public static void openNetworkSetting(Activity activity) {
+    public static void openWifiSetting(Activity activity) {
         Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
         activity.startActivityForResult(intent, 0);
     }
