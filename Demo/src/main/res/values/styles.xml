@@ -2,10 +2,37 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+
+        <!-- 将ActionBar隐藏,这里使用ToolBa r-->
+        <item name="windowActionBar">false</item>
+
+        <!-- 使用 API Level 22以上编译的话，要拿掉前綴字 -->
+        <item name="windowNoTitle">true</item>
+
+        <!-- 对应ToolBar的颜色 -->
         <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!-- 对应状态栏的颜色 -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!-- 对应EditText编辑时、RadioButton选中、CheckBox等选中时的颜色 -->
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textColorPrimary">#000000</item>
+
+        <item name="android:textColorSecondary">#ffffff</item>
+
+        <!-- 对应窗口的颜色 -->
+        <item name="android:windowBackground">@color/colorWindow</item>
+    </style>
+
+    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat.Dark">
+        <item name="android:colorBackground">#000000</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+    </style>
+
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
     </style>
 
 </resources>

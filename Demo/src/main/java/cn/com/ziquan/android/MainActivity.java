@@ -2,20 +2,24 @@ package cn.com.ziquan.android;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.Date;
-
 import cn.com.ziquan.lib.dialog.DialogAgent;
 import cn.com.ziquan.lib.dialog.LibDialog;
-import cn.com.ziquan.lib.utils.DTUtil;
+import cn.com.ziquan.lib.http.RetrofitClient;
 import cn.com.ziquan.lib.utils.GsonUtil;
 import cn.com.ziquan.lib.utils.LogUtil;
 import cn.com.ziquan.lib.utils.UIUtil;
 import cn.com.ziquan.lib.webview.WebViewAgent;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private DialogAgent dialogAgent;
 
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,20 +53,68 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //mWebViewAgent.callJavascript("calledByJava", "\"1\"", "\"2\"");
 
-                String content = GsonUtil.toJson(new Person("Adam", 32, true));
+                // 验证发送通知
+                /*
+                int id = UIUtil.sendNotification(MainActivity.this,
+                        R.mipmap.ic_launcher,
+                        BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
+                        "作为USB存储设备使用",
+                        "触摸课显示其他USB选项。");
+                */
 
-                dialogAgent = UIUtil.showAlert(MainActivity.this, content);
+
+                // 验证Retrofit:使用BaseApiServer接口
+                /*
+                Map<String, Object> param = new HashMap<>();
+                param.put("ip", "222.44.81.23");
+                Call<ResponseBody> objectCall = RetrofitClient.getInstance()
+                        .executeGet("getIpInfo.php", param);
+
+                objectCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            UIUtil.showAlert(MainActivity.this, response.body().string());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        UIUtil.showAlert(MainActivity.this, "失败");
+                    }
+                });
+                */
+                // 验证Retrofit：使用ApiServer
+                RetrofitClient.getInstance().createServer(ApiServer.class).test2("fy", "auto", "auto", "hello, world")
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    String json = response.body().string();
+                                    Test test = GsonUtil.jsonToObject(json, Test.class);
+                                    UIUtil.showAlert(MainActivity.this, test.getContent().getOut());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
 
 
             }
         });
+    }
 
-
-        this.wvHomePage = (WebView) findViewById(R.id.wv_homepage);
-
-        mWebViewAgent = WebViewAgent.with(this, wvHomePage)
-                .ready()
-                .go(URL);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     @Override

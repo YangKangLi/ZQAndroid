@@ -1,10 +1,17 @@
 package cn.com.ziquan.lib.utils;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.graphics.BitmapCompat;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import java.util.Date;
 
 import cn.com.ziquan.lib.dialog.DialogAgent;
 import cn.com.ziquan.lib.dialog.LibDialog;
@@ -17,6 +24,12 @@ public class UIUtil {
 
     // Toast对象
     private static Toast sToast;
+
+    // NotificationManager：是状态栏通知的管理类，负责发通知、清除通知等操作
+    private static volatile NotificationManager sNotificationManager;
+
+    // NotificationId，每次发送一个通知，这个值+1，到Int的最大数后回归成1
+    private static int sNotificationId = 1;
 
     /**
      * 显示Toast（短时间）
@@ -271,5 +284,60 @@ public class UIUtil {
     public static int px2dp(Activity context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
+    }
+
+    /**
+     * 初始化NotificationManager
+     *
+     * @param context
+     */
+    private static void initNotificationManager(Context context) {
+        if (sNotificationManager == null) {
+            synchronized (UIUtil.class) {
+                if (sNotificationManager == null) {
+                    sNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                }
+            }
+        }
+    }
+
+    /**
+     * 得到NotificationId
+     *
+     * @return
+     */
+    private static int getNotificationId() {
+        if (sNotificationId >= Integer.MAX_VALUE) {
+            sNotificationId = 1;
+        }
+        return sNotificationId++;
+    }
+
+    /**
+     * 发送通知
+     *
+     * @param context
+     * @param smallIconResId
+     * @param title
+     * @param content
+     * @return
+     */
+    public static int sendNotification(Context context, int smallIconResId, Bitmap bigIcon, CharSequence title, CharSequence content) {
+        // 首先初始化
+        initNotificationManager(context);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setSmallIcon(smallIconResId, 7)//设置小图标
+                .setLargeIcon(bigIcon)// 设置大图标
+                .setContentTitle(title)//设置通知标题
+                .setContentText(content);//设置通知内容
+        //.setWhen(System.currentTimeMillis());//设置通知时间，默认为系统发出通知的时间，通常不用设置
+
+        Notification notification = builder.build();
+
+
+        int notificationId = getNotificationId();
+        sNotificationManager.notify(notificationId, notification);
+        return notificationId;
     }
 }
