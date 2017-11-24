@@ -23,8 +23,9 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String URL = "file:///android_asset/index.html";
+    //private static final String URL = "file:///android_asset/index.html";
     //private static final String URL = "https://www.jd.com/";
+    private static final String URL = "https://yangkangli.github.io/hui/";
 
     private WebView wvHomePage;
 
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LogUtil.init(true);
+
+        mWebViewAgent = WebViewAgent.with(this, (WebView) findViewById(R.id.wv_homepage)).ready().go(URL);
 
 
         this.btnCallJs = (Button) findViewById(R.id.btn_call_javascript);
@@ -105,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
-
-
             }
         });
     }
@@ -119,19 +120,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!mWebViewAgent.onPressBack()) {
-            UIUtil.showConfirm(MainActivity.this, "确认要退出程序吗？", new LibDialog.OnClickListener() {
-                @Override
-                public void onClick(DialogAgent agent, int which) {
-                    MainActivity.this.finish();
-                }
-            });
+        if (mWebViewAgent != null) {
+            if (!mWebViewAgent.onPressBack()) {
+                UIUtil.showConfirm(MainActivity.this, "确认要退出程序吗？", new LibDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogAgent agent, int which) {
+                        MainActivity.this.finish();
+                    }
+                });
+            }
+        } else {
+            super.onBackPressed();
         }
     }
 
     @Override
     protected void onDestroy() {
-        mWebViewAgent.onOwnerDestroy();
+        if (mWebViewAgent != null) {
+            mWebViewAgent.onOwnerDestroy();
+        }
         super.onDestroy();
     }
 }

@@ -15,5 +15,5 @@ public interface ApiServer {
     Call<ResponseBody> test1(@Query("ip") String ip);
 
     @GET("ajax.php")
-        Call<ResponseBody> test2(@Query("a") String a, @Query("f") String f, @Query("t") String t, @Query("w") String w);
+    Call<ResponseBody> test2(@Query("a") String a, @Query("f") String f, @Query("t") String t, @Query("w") String w);
 }

@@ -3,8 +3,7 @@ package cn.com.ziquan.android;
 import android.app.Application;
 
 import cn.com.ziquan.lib.http.RetrofitClient;
-import cn.com.ziquan.lib.utils.LogUtil;
-import retrofit2.Retrofit;
+import cn.com.ziquan.lib.push.LibPush;
 
 /**
  * Created by Administrator on 2017/11/17.
@@ -19,6 +18,10 @@ public class LocalApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //LogUtil.init(true);
-        RetrofitClient.getInstance().init(BASE_URL);
+
+        RetrofitClient.init(BASE_URL);
+
+        LibPush.init(this, false, LibPush.PLATFORM_JPUSH);
+
     }
 }

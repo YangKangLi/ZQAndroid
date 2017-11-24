@@ -70,8 +70,8 @@ public class RetrofitClient {
      *
      * @param baseUrl
      */
-    public void init(String baseUrl) {
-        this.init(baseUrl, DEFAULT_TIMEOUT);
+    public static void init(String baseUrl) {
+        init(baseUrl, DEFAULT_TIMEOUT);
     }
 
     /**
@@ -80,7 +80,7 @@ public class RetrofitClient {
      * @param baseUrl
      * @param timeout
      */
-    public void init(String baseUrl, int timeout) {
+    public static void init(String baseUrl, int timeout) {
         init(baseUrl, timeout, null);
     }
 
@@ -91,7 +91,18 @@ public class RetrofitClient {
      * @param timeout
      * @param interceptor
      */
-    public void init(String baseUrl, int timeout, Interceptor interceptor) {
+    public static void init(String baseUrl, int timeout, Interceptor interceptor) {
+        getInstance().initialize(baseUrl, timeout, interceptor);
+    }
+
+    /**
+     * 初始化
+     *
+     * @param baseUrl
+     * @param timeout
+     * @param interceptor
+     */
+    private void initialize(String baseUrl, int timeout, Interceptor interceptor) {
         // 初始化BaseUrl和超时时间
         this.mBaseUrl = baseUrl;
         this.mTimeout = timeout;
